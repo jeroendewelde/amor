@@ -9,15 +9,10 @@ Get all users
 */
 const getUsers = (req, res, next) => {
   try {
-    // Get users from dataService
     const users = dataService.getUsers();
-    // Send response 
-    //*omdat het json is dat we terugsturen
-    /* res.json(users) */
-    //*Data is oK, dus 200
+
     res.status(200).json(users)
   } catch (error) {
-    //Next zorgt ervoor dat de volgende de fouten gaat interpreteren, namelijk app.js
     handleHTTPError(error, next);
   }
 };
@@ -26,14 +21,28 @@ const getUsers = (req, res, next) => {
 Get a specific user
 */
 const getUserById = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { userId } = req.params;
+    const user = dataService.getUserById(userId);
 
+    res.status(200).json(user)
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*
 Create a new user
 */
 const createUser = (req, res, next) => {
+  try {
+    const user = req.body;
+    const createdUser = dataService.createUser(user);
+
+    res.status(201).json(createdUser);
+  } catch(error) {
+    handleHTTPError(error, next);
+  }
   handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
 };
 

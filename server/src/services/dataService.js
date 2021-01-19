@@ -23,7 +23,6 @@ Write your methods from here
 
 //* Read users.json
 const readDataFromUsersFile = () => {
-  //flag is read only
   const data = fs.readFileSync(filePathUsers, {encoding: 'utf-8', flag: 'r'});
   const users = JSON.parse(data);
 
@@ -31,7 +30,6 @@ const readDataFromUsersFile = () => {
 }
 //* Read messages.json
 const readDataFromMessagesFile = () => {
-  //flag is read only
   const data = fs.readFileSync(filePathMessages, {encoding: 'utf-8', flag: 'r'});
   const messages = JSON.parse(data);
 
@@ -39,7 +37,6 @@ const readDataFromMessagesFile = () => {
 }
 //* Read matches.json
 const readDataFromMatchesFile = () => {
-  //flag is read only
   const data = fs.readFileSync(filePathMatches, {encoding: 'utf-8', flag: 'r'});
   const matches = JSON.parse(data);
 
@@ -51,16 +48,48 @@ const getUsers = () => {
   try {
     const users = readDataFromUsersFile();
 
+    //TODO check sorting
     users.sort((a, b) => {
-  
       return a.lastName.localeCompare(b.lastName);
     })
-
-    //TODO paginering, sortering, filtering
     return users;
   } catch(error) {
-    //! error teruggeven naar niveau hoger, 500 is interne server error
-    throw new HTTPError('Can\'t get users!', 500);
+    throw new HTTPError(`Can't get all users!`, 500);
+  }
+}
+
+//* Get User by Id
+const getUserById = (userId) => {
+  try {
+    const users = readDataFromUsersFile();
+    const selectedUser = users.find(u => u.id === userId);
+
+    //TODO sort
+    if (!selectedUser) {
+      throw new HTTPError(`Can't find user with userId:${userId}!`, 404);
+    }
+    return selectedUser;
+  }
+  catch (error) {
+    throw error;
+  }
+}
+
+//* Create new Message between users
+const createUser = (user) => {
+  try {
+    const users = readDataFromUsersFile();    
+    const userToCreate = {
+      ...user,
+      id: uuidv4(),
+      createdAt: Date.now()
+    };
+  
+    users.push(userToCreate);
+    fs.writeFileSync(filePathUsers, JSON.stringify(users, null, 2));
+    return userToCreate;
+  } catch(error) {
+    throw new HTTPError(`Can't create a user for:${user.username}!`, 501);
   }
 }
 
@@ -69,34 +98,39 @@ const getMessages = () => {
   try {
     const messages = readDataFromMessagesFile();
 
-    //TODO paginering, sortering, filtering
+    //TODO sort by date
     return messages;
   } catch(error) {
-    throw new HTTPError('Can\'t get messages!', 500);
+    throw new HTTPError(`Can't get all users!`, 500);
   }
 }
 
-
-
-//* Get all matches
-const getMatches = () => {
+//* Get Messages by Id
+const getMessageById = (messageId) => {
   try {
-    const matches = readDataFromMatchesFile();
+    const messages = readDataFromMessagesFile();
+    const selectedMessage = messages.find(m => m.id === messageId);
 
-    return matches;
-  } catch(error) {
-    throw new HTTPError('Can\'t get matches!', 500);
+    //TODO sort
+    if (!selectedMessage) {
+      throw new HTTPError(`Can't find message with id:${messageId}!`, 404);
+    }
+    return selectedMessage;
+  }
+  catch (error) {
+    throw error;
   }
 }
 
 //* Get Received Messages From User by Id
 const getReceivedMessagesFromUserById = (userId) => {
-  let messages = readDataFromMessagesFile();
-  
   try {
+    const messages = readDataFromMessagesFile();
     const receivedMessages = messages.filter(m => m.receiverId === userId);
+
+    //TODO sort
     if (!receivedMessages) {
-      throw new HTTPError(`Can't find messages from user with UserId: ${userId}`, 404);
+      throw new HTTPError(`Can't find received messages for user with userId:${userId}!`, 404);
     }
     return receivedMessages;
   }
@@ -107,12 +141,13 @@ const getReceivedMessagesFromUserById = (userId) => {
 
 //* Get Sent Messages From User by Id
 const getSentMessagesFromUserById = (userId) => {
-  let messages = readDataFromMessagesFile();
-  
   try {
+    const messages = readDataFromMessagesFile();
     const sentMessages = messages.filter(m => m.senderId === userId);
+
+    //TODO sort
     if (!sentMessages) {
-      throw new HTTPError(`Can't find messages from user with UserId: ${userId}`, 404);
+      throw new HTTPError(`Can't find sent messages for user with userId:${userId}!`, 404);
     }
     return sentMessages;
   }
@@ -123,12 +158,12 @@ const getSentMessagesFromUserById = (userId) => {
 
 //* Get Messages between User by Ids
 const getMessagesBetweenUsers = (userId, friendId) => {
-  let messages = readDataFromMessagesFile();
-  
   try {
-    messagesBetweenUsers = messages.filter(m => ((m.senderId === userId) && (m.receiverId === friendId)) || ((m.receiverId === userId) && (m.senderId === friendId)) );
+    const messages = readDataFromMessagesFile();
+    const messagesBetweenUsers = messages.filter(m => ((m.senderId === userId) && (m.receiverId === friendId)) || ((m.receiverId === userId) && (m.senderId === friendId)) );
+
     if (!messagesBetweenUsers) {
-      throw new HTTPError(`Can't find messages from user with UserId: ${userId}`, 404);
+      throw new HTTPError(`Can't find messages between users with ids:${userId} and ${friendId}!`, 404);
     }
     return messagesBetweenUsers;
   }
@@ -137,51 +172,107 @@ const getMessagesBetweenUsers = (userId, friendId) => {
   }
 }
 
-//* Create new Message for User 
-// post object gaan we post.json file manipuleren
+//* Create new Message between users
 const createMessage = (message) => {
   try {
-    const messages = readDataFromMessagesFile();
-    // Array uitbreiden met het post object, via push
-    // ID automatisch laten generen, datum van creatie ook door het systeem, niet door het formulier zelf
-    // extra data bij dit object koppelen
-    
-    //create post
-    // post spreaden, uuID gebruiken voor unique identifier
+    const messages = readDataFromMessagesFile();    
     const messagetoCreate = {
       ...message,
       id: uuidv4(),
       createdAt: Date.now()
     };
-    console.log(messagetoCreate);
-    //kan ook append, maar nu gaan we het wegscrhijven als string
+  
     messages.push(messagetoCreate);
-    //write message to messages.json file
     fs.writeFileSync(filePathMessages, JSON.stringify(messages, null, 2));
-
-    //Return the created message
     return messagetoCreate;
   } catch(error) {
-    throw new HTTPError(`Can't create a new message !`, 501);
+    throw new HTTPError(`Can't send a new message from user with id:${message.senderId} to user with id:${message.receiverId}!`, 501);
   }
 }
 
+//* Get all matches
+const getMatches = () => {
+  try {
+    const matches = readDataFromMatchesFile();
+
+    //TODO sort
+    return matches;
+  } catch(error) {
+    throw new HTTPError(`Can't get all matches!`, 500);
+  }
+}
+
+//* Get Match between users by Ids
+const getMatchByIds = (senderId, receiverId) => {
+  try {
+    const matches = readDataFromMatchesFile();
+    const match = matches.find(m => m.userId === senderId && m.friendId === receiverId);
+
+    //TODO sort
+    if (!match) {
+      throw new HTTPError(`Can't find match from user with userId:${senderId} to user with userId:${receiverId}!`, 404);
+    }
+    return match;
+  }
+  catch (error) {
+    throw error;
+  }
+}
+
+//* Get all matches including user with userId
+const getMatchesFromUserById = (userId) => {
+  try {
+    const matches = readDataFromMatchesFile();
+    const matchesFromUser = matches.filter(m => m.userId === userId || m.friendId === userId );
+
+    //TODO sort
+    if (!matchesFromUser) {
+      throw new HTTPError(`Can't find matches with userId:${userId}!`, 404);
+    }
+    return matchesFromUser;
+  }
+  catch (error) {
+    throw error;
+  }
+}
+
+//* Create new match from 1 user to another
+const createMatch = (match) => {
+  try {
+    const matches = readDataFromMatchesFile();    
+    const matchtoCreate = {
+      ...match,
+      id: uuidv4(),
+      createdAt: Date.now()
+    };
   
+    matches.push(matchtoCreate);
+    fs.writeFileSync(filePathMatches, JSON.stringify(matches, null, 2));
+    return matchtoCreate;
+  } catch(error) {
+    throw new HTTPError(`Can't create a match from user with id:${match.senderId} to user with id:${match.receiverId}!`, 501);
+  }
+}
 
-//* Controller schrijven
-// Callback van in "routes" implementeren, staat bij api/controllers
-
-
-//TODO getUserById, ... 
-
-// Export all the methods of the data service
-// methodes beschikbaar stellen --> exporteren
+//* Export methods
 module.exports = {
-  getUsers, 
+  getUsers,
+  getUserById,
+  createUser,
+  /* updateUser,
+  deleteUser, */
   getMessages,
-  getMatches,
+  getMessageById,
   getReceivedMessagesFromUserById,
   getSentMessagesFromUserById,
   getMessagesBetweenUsers,
-  createMessage
+  createMessage,
+  /* updateMessage,
+  deleteMessage, */
+  getMatches,
+  getMatchByIds,
+  getMatchesFromUserById,
+  createMatch,
+  /* updateMatch,
+  deleteMatch */
 };

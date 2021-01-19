@@ -10,6 +10,7 @@ Get all matches
 const getMatches = (req, res, next) => {
   try {
     const matches = dataService.getMatches();
+
     res.status(200).json(matches)
   } catch (error) {
     handleHTTPError(error, next);
@@ -20,13 +21,28 @@ const getMatches = (req, res, next) => {
 Get a specific match
 */
 const getMatchByIds = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { senderId, receiverId } = req.params;
+    const match = dataService.getMatchByIds(senderId, receiverId);
+
+    res.status(200).json(match);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*
 Get matches from a specific user
 */
 const getMatchesFromUserById = (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const matches = dataService.getMatchesFromUserById(userId);
+
+    res.status(200).json(matches);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
   handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
 };
 
@@ -34,7 +50,14 @@ const getMatchesFromUserById = (req, res, next) => {
 Create a new match
 */
 const createMatch = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const match = req.body;
+    const createdMatch = dataService.createMatch(match);
+
+    res.status(201).json(createMatch);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*
