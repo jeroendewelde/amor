@@ -11,6 +11,35 @@
 </head>
 
 <body>
+    <div class="tinder-grid">
+
+        <div class="users">
+            <h1>users</h1>
+            <ul class="users__list"></ul>
+        </div>
+        <div class="inbox">
+            <h1>inbox</h1>
+            <ul class="inbox__list"></ul>
+            <!-- <ul class="messages__list__send"></ul> -->
+        </div>
+        <div class="outbox">
+            <h1>outbox</h1>
+            <!-- <ul class="messages__list__received"></ul> -->
+            <ul class="outbox__list"></ul>
+        </div>
+        <div class="conversations">
+            <h1>Conversations</h1>
+            <ul class="conversations__list"></ul>
+        </div>
+        <div class="messageArea">
+            <h1>Message</h1>
+            <form id="messenger" method="post" action="">
+                <label for="messenger__text">Bericht:</label>
+                <textarea name="messenger__text" id="messenger__text" cols="10" rows="10" placeholder="typ jouw bericht"></textarea>
+                <button>SEND</button>
+            </form>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
     <script src="./static/js/services.js"></script>
     <script src="./static/js/main.js"></script>

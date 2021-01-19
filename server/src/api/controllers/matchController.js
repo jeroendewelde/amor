@@ -8,7 +8,12 @@ const { HTTPError, handleHTTPError } = require('../../utils');
 Get all matches
 */
 const getMatches = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const matches = dataService.getMatches();
+    res.status(200).json(matches)
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*

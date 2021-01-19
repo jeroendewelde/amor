@@ -7194,5 +7194,54 @@
     "message": "Ik ben super blij jouw kennis te ontdekken :)",
     "id": "4319759f-1b77-4c01-becc-3534cb5933d0",
     "createdAt": 1609531871337
+  },
+  {
+    "message": "Hi! How are you?",
+    "senderId": "62fae9e9-9c4a-4ad1-ad81-a82bc01a22cc",
+    "receiverId": "277527c4-c9ab-4cb3-b744-95368aa19fda",
+    "id": "832636ba-44d2-45f3-9aa6-6f3163707275",
+    "createdAt": 1611015540074
+  },
+  {
+    "message": "Hi! How are you?",
+    "senderId": "62fae9e9-9c4a-4ad1-ad81-a82bc01a22cc",
+    "receiverId": "277527c4-c9ab-4cb3-b744-95368aa19fda",
+    "id": "804c9bc9-fdec-46f6-a15f-bba7feef5416",
+    "createdAt": 1611015590105
+  },
+  {
+    "message": "Hi! How are you?",
+    "senderId": "62fae9e9-9c4a-4ad1-ad81-a82bc01a22cc",
+    "receiverId": "277527c4-c9ab-4cb3-b744-95368aa19fda",
+    "id": "d66ea1e9-752d-4931-b754-d306b9c053d0",
+    "createdAt": 1611015611269
+  },
+  {
+    "senderId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "receiverId": "679e8f13-f384-43a1-bef0-40059e5657f2",
+    "message": "Hi Henry!",
+    "id": "45bae99f-4319-4225-9033-65c8e2e9c1ca",
+    "createdAt": 1611072085142
+  },
+  {
+    "senderId": "4da5860b-e3d3-47de-940c-20aa44494c21",
+    "receiverId": "3bbce49e-dbae-454e-b885-72094404090d",
+    "message": "Hi Abigail !",
+    "id": "27ff21bb-aba5-4513-b466-845cfefd2993",
+    "createdAt": 1611072258166
+  },
+  {
+    "senderId": "4da5860b-e3d3-47de-940c-20aa44494c21",
+    "receiverId": "3bbce49e-dbae-454e-b885-72094404090d",
+    "message": "How are you?",
+    "id": "f6f96bd8-1025-431c-9c46-575b750fbd74",
+    "createdAt": 1611072266746
+  },
+  {
+    "senderId": "4da5860b-e3d3-47de-940c-20aa44494c21",
+    "receiverId": "eace7a49-5798-4adf-9467-a9594057ee6f",
+    "message": "Hi Romain !",
+    "id": "278576c4-2176-40a2-99bf-baf0b6921197",
+    "createdAt": 1611081716535
   }
 ]

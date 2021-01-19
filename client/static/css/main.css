@@ -1,0 +1,105 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a {
+  color: #000;
+}
+
+a:hover {
+  color: orange;
+}
+
+.tinder-grid {
+  padding: 1rem 1rem;
+  border: solid 1px purple;
+
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows:  1fr 1fr 1fr 1fr;
+
+  grid-row-gap: 1rem;
+  grid-column-gap: 2rem;
+}
+.tinder-grid > div{
+  border: solid 2px burlywood;
+  max-height: 100%;
+  /* overflow: hidden; */
+
+/*   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; */
+}
+
+.tinder-grid > div > * {
+  width: 100%;
+}
+
+.tinder-grid > div > h1 {
+  /* height: 10%; */
+}
+
+.tinder-grid > div > ul {
+  /* max-height: 100%; */
+  /* overflow: auto; */
+}
+
+
+
+/* .tinder-grid > div > ul {
+  overflow: auto;
+} */
+
+.users {
+  grid-column: 1 / 2;
+  grid-row: 1 / 5;
+}
+
+.users li.selected {
+  background-color: darkcyan;
+  color: #fff;
+}
+
+.inbox {
+  border: solid 4Px red;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.inbox li.selected,
+.outbox li.selected {
+  background-color: darkcyan;
+  color: #fff;
+}
+
+.outbox {
+  border: solid 4Px blue;
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+}
+.inbox__list {
+  border: solid 4Px red;
+  
+}
+
+.outbox__list {
+  border: solid 4Px blue;
+
+}
+
+.message__user {
+  font-weight: bold;
+}
