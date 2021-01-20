@@ -3,17 +3,12 @@ const TINDER_BASE_PATH = 'http://localhost:8080/api';
 function TinderApi () {
   this.getUsers = async () => {    
     try {
-      //Fetch opdracht en instrusties om json terug te sturen
-      //geeft promise terug, dus AWAIT
       const response = await fetch(`${TINDER_BASE_PATH}/users`);
 
-      //geeft response terug dus omzetten naar json
       const data = await response.json();
-      /* console.log(data); */
       return data;
     } catch(error) {
-      //notification teruggeven aan de eindgebruiker
-      console.log('An error occured!', error);
+      console.warn('An error occured!', error);
     }
   };
 
@@ -21,12 +16,10 @@ function TinderApi () {
     try {
       const response = await fetch(`${TINDER_BASE_PATH}/users/${userId}/messages?type=received`);
 
-      let data = await response.json();
-      //console.log(data);
+      const data = await response.json();
       return data;
     } catch(error) {
-    
-      console.log('An error occured!', error);
+      console.warn('An error occured!', error);
     }
   };
 
@@ -34,12 +27,10 @@ function TinderApi () {
     try {
       const response = await fetch(`${TINDER_BASE_PATH}/users/${userId}/messages?type=sent`);
 
-      let data = await response.json();
-      //console.log(data);
+      const data = await response.json();
       return data;
     } catch(error) {
-    
-      console.log('An error occured!', error);
+      console.warn('An error occured!', error);
     }
   };
 
@@ -47,24 +38,20 @@ function TinderApi () {
     try {
       const response = await fetch(`${TINDER_BASE_PATH}/users/${userId}/messages?type=conversation&friendId=${friendId}`);
 
-      let data = await response.json();
-      //console.log(data);
+      const data = await response.json();
       return data;
     } catch(error) {
-    
-      console.log('An error occured!', error);
+      console.warn('An error occured!', error);
     }
   };
 
   this.addMessageBetweenUsers = async (userId, friendId, message) => {
     try {
-
       const messageToCreate = {
         'senderId' : userId,
         'receiverId' : friendId,
         'message' : message
       }
-      console.log(messageToCreate);
       
       const response = await fetch(`${TINDER_BASE_PATH}/messages`, {
         method: 'POST',
@@ -75,19 +62,47 @@ function TinderApi () {
         body: JSON.stringify(messageToCreate),
       });
 
-      let data = await response.json();
-      console.log(data);
+      const data = await response.json();
       return data;
     } catch(error) {
-    
-      console.log('An error occured!', error);
+      console.warn('An error occured!', error);
     }
-
   };
 
   this.getMatchesForUser = async (userId) => {
+    try {
+      //console.log('userId in match:')
+      console.log(userId);
+      const response = await fetch(`${TINDER_BASE_PATH}/users/${userId}/matches`);
+    
+      const data = await response.json();
+      return data;
+    } catch(error) {
+      console.warn('An error occured!', error);
+    }
   };
 
   this.addMatch = async (userId, friendId, rating) => {
+    try {
+      const matchToCreate = {
+        'userId' : userId,
+        'friendId' : friendId,
+        'rating' : rating
+      }
+    
+      const response = await fetch(`${TINDER_BASE_PATH}/matches`, {
+        method: 'POST',
+        mode: 'cors',
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(matchToCreate),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch(error) {
+      console.warn('An error occured!', error);
+    }
   };
 }

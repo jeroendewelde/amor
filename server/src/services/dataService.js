@@ -129,6 +129,15 @@ const getReceivedMessagesFromUserById = (userId) => {
     const receivedMessages = messages.filter(m => m.receiverId === userId);
 
     //TODO sort
+    receivedMessages.sort((a, b) => {
+      if (a.createdAt < b.createdAt) {
+        return -1;
+      } if (a.createdAt > b.createdAt) {
+        return 1;
+      }
+      return 0;
+    });
+    
     if (!receivedMessages) {
       throw new HTTPError(`Can't find received messages for user with userId:${userId}!`, 404);
     }
@@ -206,7 +215,7 @@ const getMatches = () => {
 const getMatchByIds = (senderId, receiverId) => {
   try {
     const matches = readDataFromMatchesFile();
-    const match = matches.find(m => m.userId === senderId && m.friendId === receiverId);
+    const match = matches.find(m => (m.userId === senderId) && (m.friendId === receiverId));
 
     //TODO sort
     if (!match) {
@@ -223,11 +232,13 @@ const getMatchByIds = (senderId, receiverId) => {
 const getMatchesFromUserById = (userId) => {
   try {
     const matches = readDataFromMatchesFile();
-    const matchesFromUser = matches.filter(m => m.userId === userId || m.friendId === userId );
-
+    //const matchesFromUser = matches.filter(m => (m.userId === userId) || (m.friendId === userId) );
+    const matchesFromUser = matches.filter(m => (m.userId === userId) || (m.friendId === userId) );
+    
     //TODO sort
     if (!matchesFromUser) {
       throw new HTTPError(`Can't find matches with userId:${userId}!`, 404);
+      
     }
     return matchesFromUser;
   }
@@ -236,13 +247,13 @@ const getMatchesFromUserById = (userId) => {
   }
 }
 
+
 //* Create new match from 1 user to another
 const createMatch = (match) => {
   try {
     const matches = readDataFromMatchesFile();    
     const matchtoCreate = {
       ...match,
-      id: uuidv4(),
       createdAt: Date.now()
     };
   

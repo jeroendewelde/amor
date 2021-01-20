@@ -3414,9 +3414,15 @@
     "createdAt": 1609528228577
   },
   {
-    "userId": "679e8f13-f384-43a1-bef0-40059e5657f2",
-    "friendId": "c0fed28e-cc96-4d40-bebf-54832ff00ec3",
-    "rating": "like",
-    "createdAt": 1609531906929
+    "userId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "friendId": "679e8f13-f384-43a1-bef0-40059e5657f2",
+    "rating": "superlike",
+    "createdAt": 1611120244663
+  },
+  {
+    "userId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "friendId": "3bbce49e-dbae-454e-b885-72094404090d",
+    "rating": "superlike",
+    "createdAt": 1611120478325
   }
 ]
