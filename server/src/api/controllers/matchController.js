@@ -63,14 +63,29 @@ const createMatch = (req, res, next) => {
 Update a specific match
 */
 const updateMatch = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { senderId, receiverId } = req.params;
+    const match = req.body;
+    const updatedMatch = dataService.updateMatch(senderId, receiverId, match);
+
+    res.status(200).json(updatedMatch);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*
 Delete a specific match
 */
 const deleteMatch = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { senderId, receiverId } = req.params;
+    const deletedMatch = dataService.deleteMatch(senderId, receiverId, match);
+
+    res.status(200).json(deletedMatch);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 // Export the action methods = callbacks

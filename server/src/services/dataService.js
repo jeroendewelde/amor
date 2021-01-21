@@ -48,7 +48,6 @@ const getUsers = () => {
   try {
     const users = readDataFromUsersFile();
 
-    //TODO check sorting
     users.sort((a, b) => {
       return a.lastName.localeCompare(b.lastName);
     })
@@ -64,7 +63,6 @@ const getUserById = (userId) => {
     const users = readDataFromUsersFile();
     const selectedUser = users.find(u => u.id === userId);
 
-    //TODO sort
     if (!selectedUser) {
       throw new HTTPError(`Can't find user with userId:${userId}!`, 404);
     }
@@ -75,7 +73,7 @@ const getUserById = (userId) => {
   }
 }
 
-//* Create new Message between users
+//* Create new Message User
 const createUser = (user) => {
   try {
     const users = readDataFromUsersFile();    
@@ -93,12 +91,57 @@ const createUser = (user) => {
   }
 }
 
+//* Update User
+const updateUser = (userId, user) => {
+  try {
+    const users = readDataFromUsersFile();    
+    const userToUpdate = {
+      ...user,
+    };
+    userToUpdate.modifiedAt = Date.now();
+
+    const findIndex = users.findIndex(u => u.id === userId);
+    if( findIndex === -1) {
+      throw new HTTPError(`Can't update the user with userId:${userId}!`, 404);
+    }
+
+    users[findIndex] = {
+      ...users[findIndex],
+      ...userToUpdate
+    };
+
+    fs.writeFileSync(filePathUsers, JSON.stringify(users, null, 2));
+    return userToUpdate;
+  } catch(error) {
+    throw error;
+  }
+};
+
+//* Delete User
+const deleteUser = (userId) => {
+  try {
+    const users = readDataFromUsersFile();    
+    const findIndex = users.findIndex(u => u.id === userId);
+
+    if( findIndex === -1) {
+      throw new HTTPError(`Can't find the user with userId:${userId}!`, 404);
+    }
+
+    users.splice(findIndex, 1);
+    fs.writeFileSync(filePathUsers, JSON.stringify(users, null, 2));
+    return {
+      'message': `User with UserId:${userId} is succesfully removed!`
+    }
+  } catch(error) {
+    throw error;
+  }
+};
+
 //* Get all messages
 const getMessages = () => {
   try {
     const messages = readDataFromMessagesFile();
 
-    //TODO sort by date
     return messages;
   } catch(error) {
     throw new HTTPError(`Can't get all users!`, 500);
@@ -111,7 +154,6 @@ const getMessageById = (messageId) => {
     const messages = readDataFromMessagesFile();
     const selectedMessage = messages.find(m => m.id === messageId);
 
-    //TODO sort
     if (!selectedMessage) {
       throw new HTTPError(`Can't find message with id:${messageId}!`, 404);
     }
@@ -128,19 +170,19 @@ const getReceivedMessagesFromUserById = (userId) => {
     const messages = readDataFromMessagesFile();
     const receivedMessages = messages.filter(m => m.receiverId === userId);
 
-    //TODO sort
+    if (!receivedMessages) {
+      throw new HTTPError(`Can't find received messages for user with userId:${userId}!`, 404);
+    }
+
     receivedMessages.sort((a, b) => {
-      if (a.createdAt < b.createdAt) {
+      if (a.createdAt > b.createdAt) {
         return -1;
-      } if (a.createdAt > b.createdAt) {
+      } if (a.createdAt < b.createdAt) {
         return 1;
       }
       return 0;
     });
     
-    if (!receivedMessages) {
-      throw new HTTPError(`Can't find received messages for user with userId:${userId}!`, 404);
-    }
     return receivedMessages;
   }
   catch (error) {
@@ -154,10 +196,18 @@ const getSentMessagesFromUserById = (userId) => {
     const messages = readDataFromMessagesFile();
     const sentMessages = messages.filter(m => m.senderId === userId);
 
-    //TODO sort
     if (!sentMessages) {
       throw new HTTPError(`Can't find sent messages for user with userId:${userId}!`, 404);
     }
+
+    sentMessages.sort((a, b) => {
+      if (a.createdAt > b.createdAt) {
+        return -1;
+      } if (a.createdAt < b.createdAt) {
+        return 1;
+      }
+      return 0;
+    });
     return sentMessages;
   }
   catch (error) {
@@ -199,12 +249,58 @@ const createMessage = (message) => {
   }
 }
 
+//* Update Message
+const updateMessage = (messageId, message) => {
+  try {
+    const messages = readDataFromMessagesFile();
+    const messageToUpdate = {
+      ...message,
+    };
+    messageToUpdate.modifiedAt = Date.now();
+
+    const findIndex = messages.findIndex(m => m.id === messageId);
+    if( findIndex === -1) {
+      throw new HTTPError(`Can't update the message with messageId:${messageId}!`, 404);
+    }
+
+    messages[findIndex] = {
+      ...messages[findIndex],
+      ...messageToUpdate
+    };
+
+    fs.writeFileSync(filePathMessages, JSON.stringify(messages, null, 2));
+    return messageToUpdate;
+  } catch(error) {
+    throw error;
+  }
+};
+
+//* Delete Message
+const deleteMessage = (messageId) => {
+  try {
+    const messages = readDataFromMessagesFile();    
+    const findIndex = messages.findIndex(m => m.id === messageId);
+
+    if( findIndex === -1) {
+      throw new HTTPError(`Can't find the message with messageId:${messageId}!`, 404);
+    }
+
+    messages.splice(findIndex, 1);
+    fs.writeFileSync(filePathMessages, JSON.stringify(messages, null, 2));
+    return {
+      'message': `Message with messageId:${userId} is succesfully removed!`
+    }
+  } catch(error) {
+    throw error;
+  }
+};
+
+
 //* Get all matches
 const getMatches = () => {
   try {
     const matches = readDataFromMatchesFile();
 
-    //TODO sort
     return matches;
   } catch(error) {
     throw new HTTPError(`Can't get all matches!`, 500);
@@ -217,7 +313,6 @@ const getMatchByIds = (senderId, receiverId) => {
     const matches = readDataFromMatchesFile();
     const match = matches.find(m => (m.userId === senderId) && (m.friendId === receiverId));
 
-    //TODO sort
     if (!match) {
       throw new HTTPError(`Can't find match from user with userId:${senderId} to user with userId:${receiverId}!`, 404);
     }
@@ -235,18 +330,24 @@ const getMatchesFromUserById = (userId) => {
     //const matchesFromUser = matches.filter(m => (m.userId === userId) || (m.friendId === userId) );
     const matchesFromUser = matches.filter(m => (m.userId === userId) || (m.friendId === userId) );
     
-    //TODO sort
     if (!matchesFromUser) {
-      throw new HTTPError(`Can't find matches with userId:${userId}!`, 404);
-      
+      throw new HTTPError(`Can't find matches with userId:${userId}!`, 404);  
     }
+
+    matchesFromUser.sort((a, b) => {
+      if (a.createdAt > b.createdAt) {
+        return -1;
+      } if (a.createdAt < b.createdAt) {
+        return 1;
+      }
+      return 0;
+    });
     return matchesFromUser;
   }
   catch (error) {
     throw error;
   }
 }
-
 
 //* Create new match from 1 user to another
 const createMatch = (match) => {
@@ -265,25 +366,72 @@ const createMatch = (match) => {
   }
 }
 
+//* Update Match
+const updateMatch = (sederId, receiverId, match) => {
+  try {
+    const matches = readDataFromMatchesFile();
+    const matchToUpdate = {
+      ...match,
+    };
+    messageToUpdate.modifiedAt = Date.now();
+
+    const findIndex = matches.findIndex(m => (m.userId === senderId) && (m.friendId === receiverId));
+    if( findIndex === -1) {
+      throw new HTTPError(`Can't update the match form user with userId:${senderId} to user with userId:${receiverId}!`, 404);
+    }
+
+    matches[findIndex] = {
+      ...matches[findIndex],
+      ...matchToUpdate
+    };
+
+    fs.writeFileSync(filePathMatches, JSON.stringify(matches, null, 2));
+    return matchToUpdate;
+  } catch(error) {
+    throw error;
+  }
+};
+
+//* Delete Match
+const deleteMatch = (senderId, receiverId) => {
+  try {
+    const matches = readDataFromMatchesFile();    
+    const findIndex = matches.findIndex(m => (m.userId === senderId) && (m.friendId === receiverId));
+
+    if( findIndex === -1) {
+      throw new HTTPError(`Can't find the match from user with userId:${senderId} to user with user with userId:${receiverId}!`, 404);
+    }
+
+    matches.splice(findIndex, 1);
+    fs.writeFileSync(filePathMessages, JSON.stringify(matches, null, 2));
+    return {
+      'message': `Match with userId:${userId} and friendId:${friendId} is succesfully removed!`
+    }
+  } catch(error) {
+    throw error;
+  }
+};
+
+
 //* Export methods
 module.exports = {
   getUsers,
   getUserById,
   createUser,
-  /* updateUser,
-  deleteUser, */
+  updateUser,
+  deleteUser,
   getMessages,
   getMessageById,
   getReceivedMessagesFromUserById,
   getSentMessagesFromUserById,
   getMessagesBetweenUsers,
   createMessage,
-  /* updateMessage,
-  deleteMessage, */
+  updateMessage,
+  deleteMessage,
   getMatches,
   getMatchByIds,
   getMatchesFromUserById,
   createMatch,
-  /* updateMatch,
-  deleteMatch */
+  updateMatch,
+  deleteMatch
 };

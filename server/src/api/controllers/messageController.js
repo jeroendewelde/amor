@@ -71,14 +71,29 @@ const createMessage = (req, res, next) => {
 Update a specific message
 */
 const updateMessage = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { messageId } = req.params;
+    const message = req.body;
+    const updatedMessage = dataService.updateMessage(messageId, message);
+
+    res.status(200).json(updatedMessage);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*
 Delete a specific message
 */
 const deleteMessage = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { messageId } = req.params;
+    const deletedMessage = dataService.deleteMessage(messageId);
+
+    res.status(200).json(deletedMessage);
+  } catch (error) {
+    handleHTTPError(error, next);
+  }
 };
 
 // Export the action methods = callbacks

@@ -20,6 +20,7 @@ body {
   font-family: 'Poppins';
   font-weight: 300;
   color: #000;
+  overflow: hidden;
 }
 
 h1 {
@@ -38,13 +39,7 @@ ul {
 
 a {
   text-decoration: none;
-}
-
-a {
-}
-
-a:hover {
-  color: var(--color-pink)
+  color: #000;
 }
 
 button {
@@ -53,7 +48,6 @@ button {
 
 img {
   display: block;
-  /* max-width: 100%; */
 }
 
 .label-hidden {
@@ -77,44 +71,33 @@ header {
   display: flex;
 }
 
-.header__brand > * {
-  /* border: solid 1px red; */
-}
-
 .header__brand h1{
   color: var(--color-pink);
 }
 
 .header__brand svg {
-  fill:var(--color-pink);
+  fill: var(--color-pink);
   height: 2rem;
   margin: .5rem 0 0 1rem;
-  /* align-self: flex-start; */
 }
 /** End Styling Header **/
 
 /** Start Stylig Grid **/
 .amor-grid {
   padding: 2rem;
-  /* border: solid 1px purple; */
 
   height: calc(100vh - 5rem);
-  
   width: 100vw;
-
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 50%);
-
   grid-row-gap: 2rem;
   grid-column-gap: 2rem;
 }
 
 .amor-grid > div {
   border: solid 2px var(--color-pink);
-
   overflow: auto;
-  /* border-radius: 2rem; */
 }
 
 .title-box {
@@ -132,15 +115,6 @@ header {
   align-items: center;
 }
 
-.title-box > * {
-  /* border: solid 1Px blue; */
-}
-
-.amor-grid > div ul {
-  /* margin: 0.5rem 0 .5rem 1rem; */
-  /* margin-top: .5rem; */
-  overflow: auto
-}
 .amor-grid > div ul li a{
   padding: 0.5rem 1rem .5rem 1rem;
 }
@@ -154,7 +128,6 @@ header {
 
 .users__list__item a {
   display: flex;
-  /* flex-wrap: nowrap; */
 
   align-items: center;
   transition: all .2s ease-in-out;
@@ -190,13 +163,11 @@ header {
 
 /** Start Stylig Inbox/Outbox **/
 .inbox {
-  border: solid 4Px red;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
 }
 
 .outbox {
-  border: solid 4Px blue;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
 }
@@ -205,13 +176,11 @@ header {
 .outbox__count {
   width: 1.5rem;
   height: 1.5rem;
-  /* padding: 0 .5rem; */
   text-align: center;
   border-radius: 50%;
   background-color: var(--color-dark-pink);
   font-size: 1rem;
   color: #FFF;
-  /* font-weight: 300; */
 }
 
 .inbox li a,
@@ -220,20 +189,37 @@ header {
   flex-wrap: wrap;
 }
 
+.list__item__sender {
+  color: var(--color-dark-pink);
+  font-weight: 400;
+}
+
+.list__item__time {
+  color: var(--color-dark-grey);
+  font-size: .9rem;
+  margin-left: auto;
+}
+
+.list__item__message {
+  width: 100%;
+}
+
+.inbox li a:hover,
+.outbox li a:hover {
+  color: var(--color-pink);
+}
+
 .inbox li.selected,
 .outbox li.selected {
   background-color: var(--color-light-pink);
   color: var(--color-dark-pink);
-  /* color: #fff; */
 }
 
-.inbox li.selected span {
-  /* color: var(--color-dark-pink); */
-}
 .inbox li.selected a:hover,
 .outbox li.selected a:hover {
   color: var(--color-dark-pink);
 }
+
 /** End Stylig Inbox/Outbox **/
 
 /** Start Stylig Conversation **/
@@ -243,27 +229,21 @@ header {
   
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 }
 
 .conversation__friendImage {
   margin: .5rem 0;
   border-radius: 50%;
   overflow: hidden;
-  /* width: auto;
-  height: auto; */
 }
 
 .conversation__messageArea {
-  margin: 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  /* border: solid 1px red; */
-  
-  /* justify-content: flex-end; */
-  /* justify-content: flex-start; */
+
   margin-top: auto;
-  /* border: solid 1px blue; */
+  overflow: auto;
 }
 
 .conversation__messageArea > * + * {
@@ -271,8 +251,6 @@ header {
 }
 
 .conversation__message {
-  /* border: solid 1px blue; */
-  /*TODO CHEKEN**/
   width: 70%;
   border-radius: 2rem;
   padding: .5rem 1rem;
@@ -285,6 +263,17 @@ header {
   flex-basis: 100%;
 }
 
+.message a {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.message__timestamp  {
+  font-size: .9rem;
+}
+
+
 .message--sent {
   align-self: flex-end;
   background-color: var(--color-pink);
@@ -292,43 +281,29 @@ header {
   box-shadow: -.5rem .5rem 1rem #E5E5E5; 
 }
 
+.message--sent .message__timestamp {
+  margin-left: auto;
+  color: var(--color-dark-pink);
+}
+
 .message--received {
   align-self: flex-start;
   background-color: #DCDCDC;
   box-shadow: .5rem .5rem 1rem #E5E5E5;
-  /* D9DCDC */
 }
 
-.list__item__sender {
-  color: var(--color-dark-pink);
-  font-weight: 400;
-}
-
-.list__item__time {
-  color: #a5a5a5;
-  margin-left: auto;
-  /* color:blue; */
-}
-
-.list__item__message {
-  width: 100%;
+.message--received .message__timestamp {
+  color: var(--color-dark-grey);
 }
 
 .conversation__newMessage {
   background-color: var(--color-pink);
   padding: 1rem;
-
 }
 
 #messenger {
-  /* border: solid 1Px red; */
-
   display: flex;
   align-items: center;
-}
-
-#messenger textarea {
-  
 }
 
 #messenger__text {
@@ -351,21 +326,19 @@ header {
   background-color: transparent;
   border: solid 2px #FFF;
   border-radius: 50%;
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 2.8rem;
+  height: 2.8rem;
   margin-left: auto;
-
+  padding: 0;
   cursor: pointer;
   transition: all .2s ease-in-out;
-  
 }
 
 #messenger button svg{
   width: 1.2rem;
+  height: 1.2rem;
   fill : #FFF;
   transition: all .2s ease-in-out;
-/*   height: 2rem; */
-/* border: solid 1px #000; */
 }
 
 #messenger button:hover {
@@ -377,28 +350,22 @@ header {
 }
 /** End Stylig Conversation **/
 
-
-
-
-
 /** Start Stylig Matches **/
 .matches--new {
   grid-column: 5 / 6;
   grid-row: 1 / 2;
 }
+
 .matches--responded {
   grid-column: 5 / 6;
   grid-row: 2 / 3;
 }
 
 .match {
-  /* border: solid 1px red; */
   display: flex;
   flex-direction: column;
   margin: 1rem 1rem 2rem 1rem;
   height: auto;
-
-
   align-items: center;
 }
 
@@ -406,7 +373,6 @@ span.match__name {
   font-size: 1.4rem;
   text-align: center; 
   font-weight: 400;
-  /* margin-bottom: .5rem; */
   color: var(--color-dark-pink);
 }
 
@@ -416,7 +382,6 @@ span.match__ageGender {
 
   display: flex;
   align-items: center;
-  
 }
 
 span.match__ageGender svg {
@@ -431,16 +396,10 @@ span.match__ageGender svg {
 
 .match__image {  
   margin: 0 auto;
-  /* border-radius: 50%; */
-  /* overflow: hidden; */
   width: 4rem;
   height: 4rem;
   position: relative;
   padding-bottom: 0%;
-  /* max-width: 5rem;  */
-  /* max-height: 5rem; */
-  /* align-self: center; */
-  /* box-sizing: border-box; */
   max-width: 100%;
 }
 
@@ -450,32 +409,27 @@ span.match__ageGender svg {
     height: 5rem;
   }
 }
+
 @media screen and (min-width: 64rem) {
   .match__image {  
     width: 7rem;
     height: 7rem;
   }
 }
+
 @media screen and (min-width: 90rem) {
   .match__image {  
     width: 10rem;
     height: 10rem;
   }
 }
+
 @media screen and (min-width: 100rem) {
   .match__image {  
     width: 12rem;
     height: 12rem;
   }
 }
-/* @media screen and (min-width: 110rem) {
-  .match__image {  
-    width: 15rem;
-    height: 15rem;
-  }
-} */
-
-
 
 .match__image img {
   top: 0;
@@ -501,7 +455,6 @@ span.match__ageGender svg {
 .match__rating {
   position: absolute;
   width: 100%;
-  /* border: solid 1px burlywood; */
   height: 50%;
   bottom: 0;
   left: 0;
@@ -518,7 +471,6 @@ span.match__ageGender svg {
 }
 
 .match__rating li:nth-child(2) {
-  /* border: solid 1px red; */
   align-self: flex-end;
 }
 
@@ -527,7 +479,6 @@ span.match__ageGender svg {
   height: 2rem;
   background-color: #FFF;
   border: none;
-  /* border: solid 2px blue; */
 }
 
 .match__rating button svg {
@@ -548,7 +499,6 @@ span.match__ageGender svg {
 
 .match__rating li:nth-child(1) svg{
   fill: var(--color-red);
-  /* opacity: .5; */
 }
 
 .match__rating li:nth-child(1) button:hover svg{
@@ -556,7 +506,6 @@ span.match__ageGender svg {
 }
 .match__rating li:nth-child(2) svg{
   fill: var(--color-blue);
-  /* opacity: .5; */
 }
 
 .match__rating li:nth-child(2) button:hover svg{
@@ -565,7 +514,6 @@ span.match__ageGender svg {
 
 .match__rating li:nth-child(3) svg{
   fill: var(--color-green);
-  /* opacity: .5; */
 }
 
 .match__rating li:nth-child(3) button:hover svg{
@@ -587,5 +535,3 @@ span.match__ageGender svg {
   }
 }
 /** End Stylig Matches **/
-
-

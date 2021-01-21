@@ -7243,5 +7243,82 @@
     "message": "Hi Romain !",
     "id": "278576c4-2176-40a2-99bf-baf0b6921197",
     "createdAt": 1611081716535
+  },
+  {
+    "senderId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "receiverId": "679e8f13-f384-43a1-bef0-40059e5657f2",
+    "message": "",
+    "id": "9f51330c-2743-48f0-8095-9ad2e0d8a5ac",
+    "createdAt": 1611170691092
+  },
+  {
+    "senderId": "4b042fb0-0f82-4f98-9996-c893574eac5f",
+    "receiverId": "b715f59c-3030-423f-963c-c6e85d10b8f1",
+    "message": "Hi Vera !",
+    "id": "eec0be68-8bce-4694-8b14-959b6f1c5810",
+    "createdAt": 1611171939211
+  },
+  {
+    "senderId": "b903378f-faa4-4720-ada8-0842069102d9",
+    "receiverId": "66288db5-467f-4a5a-8b32-7b62b5e8b391",
+    "message": "Hi Maryam",
+    "id": "680d21a2-279d-4657-86b6-ca96f116b32f",
+    "createdAt": 1611172001667
+  },
+  {
+    "senderId": "b544e900-c7cb-4969-95fe-891d939d08f0",
+    "receiverId": "3bbce49e-dbae-454e-b885-72094404090d",
+    "message": "Ola Abigail !",
+    "id": "1e7fae9d-28b4-4494-8fc3-2f8ab3be86a6",
+    "createdAt": 1611200180915
+  },
+  {
+    "senderId": "17128bdc-101c-4591-a8de-c3aa8b7d62c0",
+    "receiverId": "3bbce49e-dbae-454e-b885-72094404090d",
+    "message": "Ola Abigail !",
+    "id": "ea09c711-2b40-474f-a4d5-709ae8944ac4",
+    "createdAt": 1611200209751
+  },
+  {
+    "senderId": "d6fdf7f5-cfef-4d65-a3f9-c2d62de1746d",
+    "receiverId": "679e8f13-f384-43a1-bef0-40059e5657f2",
+    "message": "Hi Henry",
+    "id": "b22a88e9-3c55-4664-a467-1ee142d9ce42",
+    "createdAt": 1611200225308
+  },
+  {
+    "senderId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "receiverId": "679e8f13-f384-43a1-bef0-40059e5657f2",
+    "message": "Hi Henry",
+    "id": "57bcc71e-9751-4d4f-bec1-4fe43414062b",
+    "createdAt": 1611202051901
+  },
+  {
+    "senderId": "759754b7-b76c-4b18-ad61-75d5e058ce35",
+    "receiverId": "679e8f13-f384-43a1-bef0-40059e5657f2",
+    "message": "Hi Henry",
+    "id": "daf66341-e939-419b-95cc-dac6a8de22f6",
+    "createdAt": 1611202457859
+  },
+  {
+    "senderId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "receiverId": "b785f86f-69b4-4954-9edd-93328a57312e",
+    "message": "Hi Germaine",
+    "id": "d76c5f2f-d380-4418-95da-3c454ff258db",
+    "createdAt": 1611202520825
+  },
+  {
+    "senderId": "b544e900-c7cb-4969-95fe-891d939d08f0",
+    "receiverId": "17128bdc-101c-4591-a8de-c3aa8b7d62c0",
+    "message": "Iziie Buzy?",
+    "id": "d9799065-e728-4eaf-8951-dff21b13ac68",
+    "createdAt": 1611202581781
+  },
+  {
+    "senderId": "ae70d2a5-8595-4446-8d5f-d807a4219705",
+    "receiverId": "126e1ccf-5e2c-4c5f-880d-2a812921b5cf",
+    "message": "Hi Blanka! ",
+    "id": "e3375c17-5407-49c2-b4ff-e2e2c89f0d39",
+    "createdAt": 1611211058169
   }
 ]

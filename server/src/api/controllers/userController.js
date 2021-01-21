@@ -43,21 +43,35 @@ const createUser = (req, res, next) => {
   } catch(error) {
     handleHTTPError(error, next);
   }
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
 };
 
 /*
 Update a specific user
 */
 const updateUser = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { userId } = req.params;
+    const user = req.body;
+    const updatedUser = dataService.updateUser(userId, user);
+
+    res.status(200).json(updatedUser);
+  } catch(error) {
+    handleHTTPError(error, next);
+  }
 };
 
 /*
 Delete a specific user
 */
 const deleteUser = (req, res, next) => {
-  handleHTTPError(new HTTPError('The action method is not yet implemented!', 501), next);
+  try {
+    const { userId } = req.params;
+    const deletedUser = dataService.deleteUser(userId);
+
+    res.status(200).json(deletedUser);
+  } catch(error) {
+    handleHTTPError(error, next);
+  }
 };
 
 // Export the action methods = callbacks

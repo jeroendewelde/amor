@@ -71,8 +71,6 @@ function TinderApi () {
 
   this.getMatchesForUser = async (userId) => {
     try {
-      //console.log('userId in match:')
-      console.log(userId);
       const response = await fetch(`${TINDER_BASE_PATH}/users/${userId}/matches`);
     
       const data = await response.json();
